@@ -2299,7 +2299,13 @@ export default {
             } else {
               ele.summary = 'sum'
             }
+          } else {
+            if (ele.summary === 'all') {
+              ele.summary = ''
+              ele.chartType = 'scatter'
+            }
           }
+          console.log('ele: ', ele)
         }
 
         if (!ele.sort || ele.sort === '') {

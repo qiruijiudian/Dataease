@@ -219,7 +219,6 @@ import { formatterItem, valueFormatter } from '@/views/chart/chart/formatter'
 import UserViewDialog from '@/components/canvas/customComponent/UserViewDialog'
 import UserViewMobileDialog from '@/components/canvas/customComponent/UserViewMobileDialog'
 import { equalsAny } from '@/utils/StringUtils'
-
 export default {
   name: 'UserView',
   components: {
@@ -747,7 +746,25 @@ export default {
         customStyle: JSON.stringify(customStyleChart)
       }
     },
+    /**
+      * @param {Object} obj
+      */
+    deepClone(obj) {
+      // 如果是基本数据类型或者 null，则直接返回
+      if (typeof obj !== 'object' || obj === null) {
+        return obj
+      }
+      var clone = Array.isArray(obj) ? [] : {}
+      for (var key in obj) {
+        // eslint-disable-next-line no-prototype-builtins
+        if (obj.hasOwnProperty(key)) {
+          clone[key] = this.deepClone(obj[key])
+        }
+      }
+      return clone
+    },
     getData(id, cache = true, dataBroadcast = false) {
+      console.log('hello getdata')
       if (id) {
         if (this.getDataLoading) return
         this.requestStatus = 'waiting'
@@ -785,6 +802,24 @@ export default {
           if (response.success) {
             this.chart = response.data
             this.view = response.data
+            if (this.view.type === 'scatter' && typeof this.view.data !== 'undefined' && this.view.data !== null && 'series' in this.view.data && this.view.data.series[0]) {
+              console.log('method xx', this.view.data.series[0].data)
+              var len = this.view.data.series[0].data[0].dimensionList.length
+              console.log('len: ', len)
+              if (len > 0) {
+                for (var num = 0; num < len; num++) {
+                  var _list = []
+                  this.view.data.series[num].data.forEach(element => {
+                    _list.push(JSON.parse(element.dimensionList[num].value))
+                  })
+                  for (var i = 0; i < _list.length; i++) {
+                    var _temp = this.view.data.series[num].data[i]
+                    _temp.value = _list[i]
+                  }
+                }
+              }
+              delete this.view.data.x
+            }
             if (this.chart.type.includes('table')) {
               this.$store.commit('setLastViewRequestInfo', { viewId: id, requestInfo: requestInfo })
             }
@@ -1282,6 +1317,7 @@ export default {
             bus.$emit('prop-change-data')
           }
         }
+        console.log('hello getDataOnly', this.view)
       }
     },
     pageClick(page) {

@@ -264,6 +264,9 @@ export default {
     bus.$off('sys-logout', this.logout)
   },
   created() {
+    var hide = this.permission_routes.find(item => item.path === '/wizard')
+    hide.hidden = true
+    console.log('Topbar:true')
     this.loadUiInfo()
   },
   beforeCreate() {
@@ -351,6 +354,7 @@ export default {
     },
     handleSelect(key, keyPath) {
       // 把选中路由的子路由保存store
+      console.log('this.permission_routes: ', this.permission_routes)
       const route = this.permission_routes.find(item => item.path === key)
       this.$store.commit('permission/SET_CURRENT_ROUTES', route)
       this.setSidebarHide(route)

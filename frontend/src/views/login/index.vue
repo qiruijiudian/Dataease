@@ -396,6 +396,7 @@ export default {
     }
     this.clearLarksuiteMsg()
     showMultiLoginMsg()
+    // this.autoLogin()
   },
 
   methods: {
@@ -466,6 +467,7 @@ export default {
       this.clearDingtalkMsg()
       this.clearLarkMsg()
       this.clearLarksuiteMsg()
+      // console.log('path: ', this.redirect)
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
@@ -475,7 +477,7 @@ export default {
             loginType: this.loginForm.loginType
           }
           this.$store.dispatch('user/login', user).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
+            this.$router.push({ path: '/panel/index' })
             this.loading = false
           }).catch((e) => {
             this.loading = false
@@ -484,6 +486,21 @@ export default {
         } else {
           return false
         }
+      })
+    },
+    autoLogin() {
+      this.loading = true
+      const user = {
+        username: encrypt('admin'),
+        password: encrypt('CDQRcdqr2008'),
+        loginType: this.loginForm.loginType
+      }
+      this.$store.dispatch('user/login', user).then(() => {
+        this.$router.push({ path: '/panel/index' })
+        this.loading = false
+      }).catch((e) => {
+        this.loading = false
+        e?.response?.data?.message?.startsWith('MultiLoginError') && this.showMessage()
       })
     },
     showMessage() {

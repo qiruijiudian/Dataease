@@ -55,6 +55,7 @@
 
 
     <build>
+        <defaultGoal>compile</defaultGoal>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
