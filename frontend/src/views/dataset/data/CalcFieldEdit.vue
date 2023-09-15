@@ -227,6 +227,7 @@
             />
           </el-tooltip>
         </span>
+        <!-- <a href="http://www.baidu.com" target = "_blank"> 点此查看自定义函数列表 </a> -->
         <el-input
           v-model="searchFunction"
           size="small"
@@ -307,6 +308,7 @@ import 'codemirror/addon/hint/show-hint.css'
 import 'codemirror/addon/hint/sql-hint'
 import 'codemirror/addon/hint/show-hint'
 import { post } from '../../../api/dataset/dataset'
+import jsdata from './functionAdd.json'
 
 export default {
   name: 'CalcFieldEdit',
@@ -491,6 +493,12 @@ export default {
         (response) => {
           this.functions = response.data
           this.functionData = JSON.parse(JSON.stringify(this.functions))
+          Object.keys(jsdata).forEach(key => {
+            this.functions.push(jsdata[key])
+            this.functionData.push(JSON.parse(JSON.stringify(jsdata[key])))
+          })
+          console.log('this.functions:', this.functions)
+          console.log('this.functionData:', this.functionData)
         }
       )
     },
@@ -619,6 +627,13 @@ export default {
   width: 214px;
   overflow-y: hidden;
 }
+.padding-lr a {
+    display: block;
+    color: blue;
+    padding-bottom: 3px;
+    margin-top: -9px;
+}
+
 .field-height {
   height: calc(50% - 41px);
   margin-top: 4px;

@@ -1,0 +1,18 @@
+{
+    "1": {
+        "id": 50,
+        "name": "ExcloudeZero",
+        "func": "ExcloudeZero(x)",
+        "dbType": "mysql",
+        "funcType": 4,
+        "desc": "将小于0的值置为0, 大于等于0的值不变"
+    },
+    "2": {
+        "id": 51,
+        "name": "ListValues",
+        "func": "ListValues(x,y)",
+        "dbType": "mysql",
+        "funcType": 4,
+        "desc": "将x,y列合并为一列(2元数组)，以用于绘制散点图"
+    }
+}
