@@ -497,8 +497,6 @@ export default {
             this.functions.push(jsdata[key])
             this.functionData.push(JSON.parse(JSON.stringify(jsdata[key])))
           })
-          console.log('this.functions:', this.functions)
-          console.log('this.functionData:', this.functionData)
         }
       )
     },
