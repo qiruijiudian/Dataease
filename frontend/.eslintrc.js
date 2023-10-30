@@ -4,6 +4,9 @@ module.exports = {
     parser: 'babel-eslint',
     sourceType: 'module'
   },
+  globals: {
+    BMap: true
+  },
   env: {
     browser: true,
     node: true,

@@ -139,13 +139,32 @@ export const loadMenus = (next, to) => {
   buildMenus().then(res => {
     const data = res.data
     const filterData = filterRouter(data)
+    filterData.push({
+      'path': '/faker',
+      'component': 'faker/index',
+      'redirect': null,
+      'name': 'faker2',
+      'meta': {
+        'title': '项目图景',
+        'icon': ''
+      },
+      'pid': 0,
+      'id': 100,
+      'permission': null,
+      'hidden': false,
+      'type': 1,
+      'menuSort': 0,
+      'isPlugin': false,
+      'noLayout': null,
+      'children': null
+    })
     const asyncRouter = filterAsyncRouter(filterData)
     // 如果包含首页 则默认页面是 首页 否则默认页面是仪表板页面
     if (JSON.stringify(data).indexOf('wizard') > -1) {
       asyncRouter.push({
         path: '/',
         component: Layout,
-        redirect: '/wizard/index',
+        redirect: '/panel/index',
         hidden: true
       })
     } else {
@@ -156,7 +175,18 @@ export const loadMenus = (next, to) => {
         hidden: true
       })
     }
-
+    asyncRouter.push({
+      path: 'http://www.cdqrmi.com/DataCenter/',
+      component: Layout,
+      meta: { title: '原数据平台' },
+      hidden: false
+    })
+    asyncRouter.push({
+      path: 'http://www.cdqrmi.com/',
+      component: Layout,
+      meta: { title: '栖睿机电官网首页' },
+      hidden: false
+    })
     asyncRouter.push({
       path: '*',
       redirect: '/404',

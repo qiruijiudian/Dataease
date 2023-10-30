@@ -75,7 +75,10 @@ module.exports = {
         // dll最终输出的目录
         outputPath: './vendor'
       })
-    ]
+    ],
+    externals: {
+      'BMap': 'BMap'
+    }
   },
   chainWebpack: config => {
     config.module.rules.delete('svg') // 删除默认配置中处理svg,

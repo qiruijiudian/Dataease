@@ -39,7 +39,7 @@
           </el-menu-item>
         </app-link>
       </div>
-    </el-menu>
+          </el-menu>
 
     <div
       class="right-menu"
@@ -264,9 +264,11 @@ export default {
     bus.$off('sys-logout', this.logout)
   },
   created() {
-    var hide = this.permission_routes.find(item => item.path === '/wizard')
-    hide.hidden = true
-    console.log('Topbar:true')
+    var hidden_list = ['/wizard', '/appTemplateMarket', '/templateMarket']
+    this.permission_routes.filter(item => hidden_list.includes(item.path)).forEach(item => {
+      item.hidden = true
+    })
+    console.log('this.permission_routes', this.permission_routes)
     this.loadUiInfo()
   },
   beforeCreate() {
@@ -362,7 +364,7 @@ export default {
     // 设置侧边栏的显示和隐藏
     setSidebarHide(route) {
       const hidePaths = ['/person-info', '/person-pwd', '/about']
-      if (hidePaths.includes(route.path)) {
+      if (route.path && hidePaths.includes(route.path)) {
         this.$store.dispatch('app/toggleSideBarHide', true)
         return
       }

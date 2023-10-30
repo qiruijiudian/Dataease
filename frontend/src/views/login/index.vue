@@ -52,7 +52,7 @@
                 v-else
                 class="login-welcome"
               >
-                {{ $t('login.welcome') + (uiInfo && uiInfo['ui.title'] && uiInfo['ui.title'].paramValue || ' DataEase') }}
+                {{ $t('login.welcome') + (uiInfo && uiInfo['ui.title'] && uiInfo['ui.title'].paramValue || '成都栖睿数据分析平台') }}
               </div>
               <div class="login-form">
                 <el-form-item v-if="radioTypes.length > 1">
